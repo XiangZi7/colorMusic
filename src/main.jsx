@@ -4,7 +4,7 @@ import {NextUIProvider} from "@nextui-org/react";
 import {ThemeProvider as NextThemesProvider} from "next-themes";
 import {BrowserRouter} from 'react-router-dom';
 import App from './App.jsx'
-import './index.css'
+import './styles/tailwind.css'
 // Redux
 import store from "./stores";
 import {Provider} from "react-redux";

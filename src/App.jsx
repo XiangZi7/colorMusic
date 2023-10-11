@@ -1,8 +1,9 @@
-import './App.css'
+import './styles/reset.css'
+import './styles/app.scss'
 // router
-import {NavLink} from 'react-router-dom';
 import Router from './routes';
-import {useState} from "react";
+import {useState} from 'react'
+import {NavLink} from 'react-router-dom'
 
 function App() {
 

@@ -2,9 +2,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+//createSlice 用于定义 Redux 的状态和操作。它使用了一种更简洁的语法来定义 reducer 和 action，并自动处理了不可变性的问题。
 const channelStore = createSlice({
     name: "channel",
-
     // 初始值
     initialState: {
         channelList: [],

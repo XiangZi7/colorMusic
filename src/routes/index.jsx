@@ -1,5 +1,6 @@
 import {Navigate, useRoutes} from 'react-router-dom';
 import {lazy, Suspense} from 'react';
+import {Spinner} from "@nextui-org/react";
 
 const Home = lazy(() => import('@/pages/Home'));
 const Friend = lazy(() => import('@/pages/Friend'));
@@ -7,7 +8,7 @@ const Chat = lazy(() => import('@/pages/Chat'));
 
 
 const LoadingTip = Element => (
-    <Suspense fallback={<div>loading...</div>}>
+    <Suspense fallback={<Spinner/>}>
         <Element/>
     </Suspense>
 );
