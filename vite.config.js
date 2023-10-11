@@ -21,5 +21,8 @@ export default defineConfig({
           // eslint-disable-next-line no-undef
             '@': path.resolve(__dirname, './src')
         }
+    },
+    server: {
+        host: true // 打印 IP 地址
     }
 })

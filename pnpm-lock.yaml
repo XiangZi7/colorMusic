@@ -1255,8 +1255,8 @@ packages:
 
   registry.npmmirror.com/@nextui-org/navbar@2.0.22(@types/react@18.2.27)(framer-motion@10.16.4)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3):
     resolution: {integrity: sha512-s6XJUcx7p+8tUBVPK5QPqk8jjrnUt083r8hoa0SA5WWe4TY4QiEFWX2maaDFINo00/6mZmMlql0QJh1OrhdsDA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@nextui-org/navbar/-/navbar-2.0.22.tgz}
-    id: registry.npmmirror.com/@nextui-org/navbar/2.0.22
-    name: '@nextui-org/navbar'
+    id: registry.npmmirror.com/@nextui-org/navbar.jsx/2.0.22
+    name: '@nextui-org/navbar.jsx'
     version: 2.0.22
     peerDependencies:
       framer-motion: '>=4.0.0'
@@ -1436,7 +1436,7 @@ packages:
       '@nextui-org/listbox': registry.npmmirror.com/@nextui-org/listbox@2.1.10(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
       '@nextui-org/menu': registry.npmmirror.com/@nextui-org/menu@2.0.11(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
       '@nextui-org/modal': registry.npmmirror.com/@nextui-org/modal@2.0.23(@types/react@18.2.27)(framer-motion@10.16.4)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
-      '@nextui-org/navbar': registry.npmmirror.com/@nextui-org/navbar@2.0.22(@types/react@18.2.27)(framer-motion@10.16.4)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
+      '@nextui-org/navbar': registry.npmmirror.com/@nextui-org/navbar.jsx@2.0.22(@types/react@18.2.27)(framer-motion@10.16.4)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
       '@nextui-org/pagination': registry.npmmirror.com/@nextui-org/pagination@2.0.22(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
       '@nextui-org/popover': registry.npmmirror.com/@nextui-org/popover@2.1.9(@types/react@18.2.27)(framer-motion@10.16.4)(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
       '@nextui-org/progress': registry.npmmirror.com/@nextui-org/progress@2.0.21(react-dom@18.2.0)(react@18.2.0)(tailwindcss@3.3.3)
