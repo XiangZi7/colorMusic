@@ -28,7 +28,6 @@ export default function App() {
     // 播放器dom
     const audioRef = useRef(null);
     // 消息提醒
-    const messageWrapperRef = useRef(null)
     // 监听播放状态
     useEffect(() => {
         if (isPlaying) {
@@ -87,6 +86,7 @@ export default function App() {
     };
 
     const handleLoopClick = () => {
+        MessageWrapper.addMessage('success', '循环播放');
         setIsLooping(!isLooping);
     };
 
@@ -213,7 +213,6 @@ export default function App() {
                 </CardBody>
             </Card>
             <audio ref={audioRef} onEnded={handleEnded}/>
-            <MessageWrapper ref={messageWrapperRef} />
         </div>
     );
 }
