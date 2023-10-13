@@ -25,6 +25,13 @@ const rootRouter = [
         },
         children: [{path: 'chat/:name', element: LoadingTip(Chat)}],
     },
+    {
+        path: '/test',
+        element: LoadingTip(Chat),
+        meta: {
+            title: '测试',
+        },
+    },
 ];
 
 const Router = () => {

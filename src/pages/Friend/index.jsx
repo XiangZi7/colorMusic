@@ -11,6 +11,12 @@ export default function index() {
     const {count} = useSelector((state) => state.counter);
     // 处理数据的函数
     const dispatch = useDispatch();
+
+    function addnum() {
+        dispatch(addCount())
+        console.log(count)
+    }
+
     return (
         <div>
             <div className="App">
@@ -19,7 +25,7 @@ export default function index() {
                 ))}
                 <button onClick={() => dispatch(addTonum(10))}>+10</button>
                 <button onClick={() => dispatch(addTonum(20))}>+20</button>
-                <button onClick={() => dispatch(addCount())}>+</button>
+                <button onClick={addnum}>+</button>
                 <p>{count}</p>
                 <button onClick={() => dispatch(decreaseCount())}>-</button>
             </div>

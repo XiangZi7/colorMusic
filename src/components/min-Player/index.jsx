@@ -9,25 +9,43 @@ import {ShuffleIcon} from "./ShuffleIcon";
 import {PlayIcon} from "./PlayIcon.jsx"
 import {useDispatch, useSelector} from "react-redux";
 import {useState, useEffect, useRef} from 'react'
-import {setCurrentIndex} from "@/stores/modules/playerStore.jsx";
-
+import {
+    addSongs,
+    setPlaying,
+    playNext,
+    playPrevious,
+    setLooping,
+    setShuffling
+} from "@/stores/modules/playerStore";
+import message from '@/components/message/message.jsx';
+import {formatTime} from "@/utils/FormatTime.jsx";
+import './index.scss'
+import Slider from "@/components/min-Player/slider.jsx";
 
 export default function App() {
-    const [liked, setLiked] = React.useState(false);
+// 播放器dom
+    const audioRef = useRef(null);
+
     // 得到 Redux 中的数据
     const {
         songs,
-        currentIndex
+        currentIndex,
+        isPlaying,
+        isLooping,
+        isShuffling
     } = useSelector((state) => state.player);
     const dispatch = useDispatch();
+    // 设置喜欢
+    const [liked, setLiked] = React.useState(false);
+    // 当前歌曲总时长
+    const [currentTime, setCurrentTime] = useState(0);
+    // 当前歌曲时长
+    const [duration, setDuration] = useState(0);
+    const [slider, setSlider] = useState(0)
+    // useEffect(() => {
+    //     dispatch(setCurrentIndex(songs.length - 1))
+    // }, [currentIndex, songs]);
 
-    // 是否播放
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [isLooping, setIsLooping] = useState(false);
-    const [isShuffling, setIsShuffling] = useState(false);
-    // 播放器dom
-    const audioRef = useRef(null);
-    // 消息提醒
     // 监听播放状态
     useEffect(() => {
         if (isPlaying) {
@@ -41,59 +59,46 @@ export default function App() {
     useEffect(() => {
         audioRef.current.src = songs[currentIndex].src;
         audioRef.current.play();
-        setIsPlaying(true);
+        dispatch(setPlaying(true))
     }, [currentIndex]);
+
+    //   歌曲时间
+    const handleTimeUpdate = () => {
+        setCurrentTime(audioRef.current?.currentTime || 0);
+    };
+    // 当前播放时间
+    const handleLoadedData = () => {
+        setDuration(audioRef.current?.duration || 0);
+    };
 
     // 暂停\播放
     const handlePlayPauseClick = () => {
-        setIsPlaying(!isPlaying);
+        dispatch(setPlaying(!isPlaying))
     };
 
     // 下一首
     const handleNextClick = () => {
-        let currentIndexs = songs.findIndex(song => song.id === songs[currentIndex].id);
-        if (isShuffling) {
-            let randomIndex = Math.floor(Math.random() * songs.length);
-            while (randomIndex === currentIndexs) {
-                randomIndex = Math.floor(Math.random() * songs.length);
-            }
-            dispatch(setCurrentIndex(randomIndex))
-        } else {
-            if (currentIndex === songs.length - 1) {
-                dispatch(setCurrentIndex(0))
-            } else {
-                dispatch(setCurrentIndex(currentIndex + 1))
-            }
-        }
+        dispatch(playNext())
     };
 
     // 上一首
     const handlePrevClick = () => {
-        let currentIndexs = songs.findIndex(song => song.id === songs[currentIndex].id);
-        if (isShuffling) {
-            let randomIndex = Math.floor(Math.random() * songs.length);
-            while (randomIndex === currentIndexs) {
-                randomIndex = Math.floor(Math.random() * songs.length);
-            }
-            dispatch(setCurrentIndex(randomIndex));
-        } else {
-            if (currentIndexs === 0) {
-                dispatch(setCurrentIndex(songs.length - 1));
-            } else {
-                dispatch(setCurrentIndex(currentIndex - 1));
-            }
-        }
+        dispatch(playPrevious())
     };
 
+    // 循环播放
     const handleLoopClick = () => {
-        MessageWrapper.addMessage('success', '循环播放');
-        setIsLooping(!isLooping);
+        message.success("循环播放", 3)
+        dispatch(setLooping(!isLooping));
     };
 
+    // 随机播放
     const handleShuffleClick = () => {
-        setIsShuffling(!isShuffling);
+        message.success("随机播放", 3)
+        dispatch(setShuffling(!isShuffling));
     };
 
+    // 播放结束回调
     const handleEnded = () => {
         if (isLooping) {
             audioRef.current.currentTime = 0;
@@ -102,6 +107,25 @@ export default function App() {
             handleNextClick();
         }
     };
+
+    const addsong = () => {
+        const song = [{
+            id: "4098725024",
+            title: 'NinelieAimerTest',
+            singer: "AimerTest",
+            album: "ninelie EPAimerTest",
+            cover: "http://p3.music.126.net/g7aakYG_Wfmrn1_IDfVUXA==/109951165050166241.jpg",
+            src: 'http://music.163.com/song/media/outer/url?id=409872504.mp3',
+            time: 260675,
+            mv: "",
+            Lyric: ""
+        }]
+        dispatch(addSongs(song))
+    }
+    const SliderChange = (e) => {
+        setCurrentTime(e);
+        audioRef.current.currentTime = e;
+    }
 
     return (
         <div>
@@ -146,19 +170,21 @@ export default function App() {
                             </div>
 
                             <div className="flex flex-col mt-3 gap-1">
-                                <Progress
-                                    aria-label="Music progress"
-                                    classNames={{
-                                        indicator: "bg-default-800 dark:bg-white",
-                                        track: "bg-default-500/30",
-                                    }}
-                                    color="default"
-                                    size="sm"
-                                    value={33}
-                                />
+                                {/*<Progress*/}
+                                {/*    aria-label="Music progress"*/}
+                                {/*    classNames={{*/}
+                                {/*        indicator: "bg-default-800 dark:bg-white",*/}
+                                {/*        track: "bg-default-500/30",*/}
+                                {/*    }}*/}
+                                {/*    color="default"*/}
+                                {/*    size="sm"*/}
+                                {/*    value={33}*/}
+                                {/*/>*/}
+                                <Slider value={currentTime} duration={duration}
+                                        onSliderChange={SliderChange}></Slider>
                                 <div className="flex justify-between">
-                                    <p className="text-small">1:23</p>
-                                    <p className="text-small text-foreground/50">4:32</p>
+                                    <p className="text-small">{formatTime(currentTime)}</p> {/* 显示当前播放时间 */}
+                                    <p className="text-small text-foreground/50">{formatTime(duration)}</p> {/* 显示歌曲时长 */}
                                 </div>
                             </div>
 
@@ -188,7 +214,7 @@ export default function App() {
                                     variant="light"
                                     onClick={handlePlayPauseClick}
                                 >
-                                    {isPlaying ? <PlayIcon size={54}/> : <PauseCircleIcon size={54}/>}
+                                    {isPlaying ? <PauseCircleIcon size={54}/> : <PlayIcon size={54}/>}
                                 </Button>
                                 <Button
                                     isIconOnly
@@ -204,15 +230,23 @@ export default function App() {
                                     className="data-[hover]:bg-foreground/10"
                                     radius="full"
                                     variant="light"
+                                    onClick={handleShuffleClick}
                                 >
                                     <ShuffleIcon className="text-foreground/80"/>
                                 </Button>
                             </div>
                         </div>
+                        <Button
+                            className="text-default-900/60 data-[hover]:bg-foreground/10 -translate-y-2 translate-x-2"
+                            radius="full"
+                            variant="light"
+                            onClick={addsong}
+                        >添加歌曲</Button>
                     </div>
                 </CardBody>
             </Card>
-            <audio ref={audioRef} onEnded={handleEnded}/>
+            <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}
+                   onLoadedData={handleLoadedData} onEnded={handleEnded}/>
         </div>
     );
 }

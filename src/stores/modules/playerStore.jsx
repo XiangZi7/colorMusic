@@ -39,26 +39,90 @@ const playerStore = createSlice({
         animationPlayState: "paused",
         // 当前高亮显示的歌词索引
         currentLyricIndex: -1,
+        // 循环播放
+        isLooping: false,
+        // 随机播放
+        isShuffling: false,
     },
     // 修改状态的方法 同步方法，可以直接修改值
     reducers: {
         updateSongs(state, param) {
             state.songs[state.currentIndex] = Object.assign(state.songs[state.currentIndex], {...param})
         },
+        // 当前播放的歌曲
         setCurrentIndex(state, idx) {
             state.currentIndex = idx.payload
+        },
+        addSongs(state, arr) {
+            state.songs = state.songs.concat(arr.payload);
+        },
+        // 播放
+        setPlaying: (state, val) => {
+            state.isPlaying = val.payload;
+        },
+        // 循环
+        setLooping: (state, val) => {
+            state.isLooping = val.payload;
+        },
+        // 随机
+        setShuffling: (state, val) => {
+            state.isShuffling = val.payload;
+        },
+        // 下一首
+        playNext: (state) => {
+            if (state.isShuffling) {
+                let randomIndex = state.currentIndex;
+                while (randomIndex === state.currentIndex) {
+                    randomIndex = Math.floor(Math.random() * state.songs.length);
+                }
+                state.currentIndex = randomIndex;
+            } else {
+                state.currentIndex = (state.currentIndex + 1) % state.songs.length;
+            }
+            state.isPlaying = true;
+        },
+        // 上一首
+        playPrevious: (state) => {
+            if (state.isShuffling) {
+                let randomIndex = state.currentIndex;
+                while (randomIndex === state.currentIndex) {
+                    randomIndex = Math.floor(Math.random() * state.songs.length);
+                }
+                state.currentIndex = randomIndex;
+            } else {
+                state.currentIndex = (state.currentIndex - 1 + state.songs.length) % state.songs.length;
+            }
+            state.isPlaying = true;
         }
     },
 });
 
 // 解构出来 actionCreater函数
-const {updateSongs,setCurrentIndex} = playerStore.actions;
+const {
+    updateSongs,
+    setCurrentIndex,
+    addSongs,
+    setPlaying,
+    playNext,
+    playPrevious,
+    setLooping,
+    setShuffling
+} = playerStore.actions;
 // 获取 reducer
 // 用于定义如何更新应用的状态。它接收两个参数：当前的状态（state）和即将执行的 action，并返回一个新的状态。
 const reducer = playerStore.reducer;
 
 // 按需导出
-export {updateSongs,setCurrentIndex};
+export {
+    updateSongs,
+    setCurrentIndex,
+    addSongs,
+    setPlaying,
+    playNext,
+    playPrevious,
+    setLooping,
+    setShuffling
+};
 // 默认导出
 export default reducer;
 

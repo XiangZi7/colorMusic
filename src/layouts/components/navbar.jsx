@@ -22,6 +22,7 @@ export default function App() {
     const [items] = useState([
         {path: '/home', title: '首页'},
         {path: '/friend', title: '好友'},
+        {path: '/test', title: '测试'},
     ]);
     const [isactive, setIsactive] = useState(0)
 
