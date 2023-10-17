@@ -15,7 +15,7 @@ import {
 import {AcmeLogo} from "./AcmeLogo.jsx";
 import {SearchIcon} from "./SearchIcon.jsx";
 import {useState} from 'react'
-import {NavLink, useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 export default function App() {
     // 根据路由表生成对应的路由规则

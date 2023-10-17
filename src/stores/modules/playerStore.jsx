@@ -15,7 +15,7 @@ const playerStore = createSlice({
             src: 'http://music.163.com/song/media/outer/url?id=27591651.mp3',
             time: 149000,
             mv: "",
-            Lyric: ""
+            Lyric: "27591651"
         },
             {
                 id: "409872504",
@@ -26,7 +26,7 @@ const playerStore = createSlice({
                 src: 'http://music.163.com/song/media/outer/url?id=409872504.mp3',
                 time: 260675,
                 mv: "",
-                Lyric: ""
+                Lyric: "409872504"
             },
         ],
         // 历史搜索
@@ -53,8 +53,11 @@ const playerStore = createSlice({
         setCurrentIndex(state, idx) {
             state.currentIndex = idx.payload
         },
+        // 添加歌曲
         addSongs(state, arr) {
+            let idx = state.songs.length - 1
             state.songs = state.songs.concat(arr.payload);
+            state.currentIndex = idx + 1
         },
         // 播放
         setPlaying: (state, val) => {

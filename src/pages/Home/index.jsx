@@ -5,6 +5,7 @@ import Moon from '@/components/min-Player/moon.jsx'
 import Sum from '@/components/min-Player/sum.jsx'
 
 export default function index() {
+    
     const {theme, setTheme} = useTheme();
     return (
         <div className="flex flex-col justify-center">

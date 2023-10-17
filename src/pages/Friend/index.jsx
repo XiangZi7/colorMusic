@@ -5,8 +5,6 @@ import {useState} from 'react'
 
 export default function index() {
     const [msg, setMsg] = useState([{id: 1, name: "小米"}, {id: 2, name: "大门"}])
-
-
     // 得到 Redux 中的数据
     const {count} = useSelector((state) => state.counter);
     // 处理数据的函数
