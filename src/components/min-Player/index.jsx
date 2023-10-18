@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardBody, Image, Button, ScrollShadow} from "@nextui-org/react";
+import {Card, CardBody, Image, Button, ScrollShadow, Spinner} from "@nextui-org/react";
 import {HeartIcon} from "./HeartIcon";
 import {PauseCircleIcon} from "./PauseCircleIcon";
 import {NextIcon} from "./NextIcon";
@@ -73,9 +73,8 @@ export default function App() {
     const handleTimeUpdate = () => {
         setCurrentTime(audioRef.current?.currentTime || 0);
         watchSongLine()
-        const lineHeight = 48; // 每行歌词的高度
-        const translateY = (currentLine - 4) * -lineHeight; // 将当前行的上两行作为起始位置
-        lyricRef.current.style.transform = `translateY(${translateY}px)`;
+
+
     };
     // 当前歌曲总时间
     const handleLoadedData = () => {
@@ -132,6 +131,12 @@ export default function App() {
                 break;
             }
         }
+
+        if (lyricList.length > 0) {
+            const lineHeight = 48; // 每行歌词的高度
+            const translateY = (currentLine - 4) * -lineHeight; // 将当前行的上两行作为起始位置
+            lyricRef.current.style.transform = `translateY(${translateY}px)`;
+        }
     }
 
     // 滑块Change事件
@@ -176,7 +181,7 @@ export default function App() {
                                 >
                                     <HeartIcon
                                         className={liked ? "[&>path]:stroke-transparent" : ""}
-                                        fill={liked ? "currentColor" : "none"}
+                                        fill={liked ? "#EF1C26" : "none"}
                                     />
                                 </Button>
                             </div>
@@ -238,16 +243,17 @@ export default function App() {
                             </div>
                         </div>
                         <ScrollShadow hideScrollBar className="w-[570px] h-[400px] lyrics-container">
-                            <ul ref={lyricRef} className="w-full">
+                            {lyricList.length > 0 ? <ul ref={lyricRef} className="w-full">
                                 {lyricList.map((item, idx) => (
-                                    <li className={`text-sm text-center py-1 ${idx === currentLine ? 'active text-stone-950 text-sm text-base transition-all py-1.5' : 'text-stone-400'}`}
+                                    <li className={`text-sm text-center py-1 ${idx === currentLine ? 'active text-lg font-semibold text-foreground/90  transition-all py-1.5' : 'text-stone-400'}`}
                                         key={item.time}
                                     >
                                         <p>{item.lrc}</p>
                                         <p>{item.tlyric}</p>
                                     </li>
                                 ))}
-                            </ul>
+                            </ul> : <Spinner className="flex item-center h-full"/>}
+
                         </ScrollShadow>
                     </div>
                 </CardBody>

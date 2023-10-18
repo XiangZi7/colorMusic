@@ -7,10 +7,32 @@ export default {
         "./src/**/*.{js,ts,jsx,tsx}",
         "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
     ],
-    theme: {
-        extend: {},
-    },
+
     darkMode: "class",
-    plugins: [nextui()],
+    plugins: [nextui({
+        defaultTheme: "light", // 来自主题对象的默认主题
+        layout: {
+            disabledOpacity: "0.3",
+            radius: {
+                small: "4px",
+                medium: "6px",
+                large: "8px",
+            },
+            borderWidth: {
+                small: "1px",
+                medium: "2px",
+                large: "3px",
+            },
+        },
+        themes:{
+            light: {
+                colors: {
+                    background: "#f3f6fd",
+                }
+            },
+
+
+        }
+    })],
 }
 

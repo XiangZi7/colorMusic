@@ -7,7 +7,7 @@ import path from 'path';
 export default defineConfig({
     plugins: [react(),
         // AutoImport({
-        //     imports: ["react",'react-router-dom'], // 自动导入vue和vue-router相关函数
+        //     imports: ["react",'react-router-dom'], // 自动导入相关函数
         //     dirs: [
         //         'src/utils/**',
         //         'src/stores/**',
