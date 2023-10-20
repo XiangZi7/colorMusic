@@ -1,6 +1,6 @@
-import React, {useState, useRef, useEffect} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import './Slider.scss';
+import './slider.scss';
 
 const Slider = ({min, max, step, value, onChange}) => {
     const [sliderValue, setSliderValue] = useState(value); // 当前滑块的值
