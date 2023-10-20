@@ -13,7 +13,7 @@ export default function LayoutIndex() {
                 <div className="app-sidebar flex px-4 py-8 flex-col items-center">
                     <Sidebar/>
                 </div>
-                <div className="AppMain flex-1">
+                <div className="AppMain flex-1 px-5 py-5">
                     <Router/>
                 </div>
             </div>

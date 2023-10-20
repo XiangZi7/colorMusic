@@ -149,7 +149,7 @@ export default function App() {
         <div>
             <Card
                 isBlurred
-                className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px]"
+                className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] backdrop-blur-lg"
                 shadow="sm"
             >
                 <CardBody>

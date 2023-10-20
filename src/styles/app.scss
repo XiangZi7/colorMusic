@@ -22,8 +22,17 @@
   --hue: 235;
   --hue-complimentary1: 265;
   --hue-complimentary2: 295;
+
+  --greyLight-2: #c8d0e7;
+  --greyLight-3: #bec8e4;
+  --greyDark: #9baacf;
+  --white: #FFFFFF;
 }
 
 body {
   font-family: var(--font-family);
+}
+
+.shadow-blue{
+  box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
 }

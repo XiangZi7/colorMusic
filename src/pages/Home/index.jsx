@@ -1,10 +1,15 @@
-import MinPlayer from '@/components/min-Player/index.jsx'
-export default function index() {
+import Cards from './components/card.jsx'
+import Popular from './components/Popular.jsx'
+import Weather from './components/weather.jsx'
+
+export default function App() {
     return (
-        <div className="flex flex-col justify-center">
-            <div className="flex relative w-full h-auto  rounded-2xl items-center justify-center py-14 px-4 lg:px-8">
-                <MinPlayer/>
+        <div className="flex justify-center">
+            <Cards/>
+            <div className="flex flex-col">
+                <Popular/>
+                <Weather />
             </div>
         </div>
-    )
+    );
 }

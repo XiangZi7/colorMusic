@@ -3,7 +3,7 @@ import {nextui} from "@nextui-org/react";
 
 export default {
     content: [
-        "./index.html",
+        "./index.jsx.html",
         "./src/**/*.{js,ts,jsx,tsx}",
         "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
     ],
@@ -30,8 +30,6 @@ export default {
                     background: "#f3f6fd",
                 }
             },
-
-
         }
     })],
 }

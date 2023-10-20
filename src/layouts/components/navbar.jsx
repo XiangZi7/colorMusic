@@ -62,7 +62,7 @@ export default function App() {
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <span className="font-semibold text-foreground/90">一向纯荣</span>
+                <span className="text-sm font-bold text-foreground/90">一向纯荣</span>
             </div>
         </div>
     );
