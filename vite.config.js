@@ -5,6 +5,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    base:"./",
     plugins: [react(),
         // AutoImport({
         //     imports: ["react",'react-router-dom'], // 自动导入相关函数
