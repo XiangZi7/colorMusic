@@ -28,7 +28,7 @@ const rootRouter = [
         meta: {title: 'MV',},
         children: [{path: 'chat/:name', element: LoadingTip(Chat)}],
     },
-    {path: '/test', element: LoadingTip(Chat), meta: {title: '测试',},},
+    {path: '/chat', element: LoadingTip(Chat), meta: {title: 'AI',},},
     {path: '/ml', element: LoadingTip(Ml), meta: {title: '乐库'}},
     {path: '/mini', element: LoadingTip(Mini), meta: {title: '迷你播放器'}},
     {path: '/radio', element: LoadingTip(Radio), meta: {title: '电台'}},

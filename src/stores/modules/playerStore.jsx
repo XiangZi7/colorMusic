@@ -4,6 +4,9 @@ const playerStore = createSlice({
     name: "player",
     // 初始化 state
     initialState: {
+        // 播放器
+        currentTime: 0,
+        duration: 0,
         count: 0,
         // 歌曲
         songs: [{
@@ -96,7 +99,8 @@ const playerStore = createSlice({
                 state.currentIndex = (state.currentIndex - 1 + state.songs.length) % state.songs.length;
             }
             state.isPlaying = true;
-        }
+        },
+
     },
 });
 
@@ -109,7 +113,7 @@ const {
     playNext,
     playPrevious,
     setLooping,
-    setShuffling
+    setShuffling,
 } = playerStore.actions;
 // 获取 reducer
 // 用于定义如何更新应用的状态。它接收两个参数：当前的状态（state）和即将执行的 action，并返回一个新的状态。
@@ -124,7 +128,7 @@ export {
     playNext,
     playPrevious,
     setLooping,
-    setShuffling
+    setShuffling,
 };
 // 默认导出
 export default reducer;

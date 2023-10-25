@@ -1,4 +1,3 @@
-import React from "react";
 import {Card, CardBody, Image, Button, ScrollShadow, Spinner} from "@nextui-org/react";
 import {HeartIcon} from "./HeartIcon";
 import {PauseCircleIcon} from "./PauseCircleIcon";
@@ -7,142 +6,36 @@ import {PreviousIcon} from "./PreviousIcon";
 import {RepeatOneIcon} from "./RepeatOneIcon";
 import {ShuffleIcon} from "./ShuffleIcon";
 import {PlayIcon} from "./PlayIcon.jsx"
-import {useDispatch, useSelector} from "react-redux";
-import {useState, useEffect, useRef} from 'react'
-import {
-    setPlaying,
-    playNext,
-    playPrevious,
-    setLooping,
-    setShuffling
-} from "@/stores/modules/playerStore";
-import message from '@/components/message/message.jsx';
+import {useState, useEffect, useRef, useContext} from 'react'
+
 import {formatTime} from "@/utils/FormatTime.jsx";
 import './index.scss'
 import Slider from "@/components/min-Player/slider.jsx";
-import {get} from "@/utils/http.js";
-import {createBilingualData} from "@/utils/parseLyrics.js";
+import MusicPlayerContext from "@/utils/PlayerContext.js";
+
 
 export default function App() {
-    // 播放器dom
-    const audioRef = useRef(null);
-    // 歌词滚动框
-    const lyricRef = useRef(null);
-    // 得到 Redux 中的数据
     const {
-        songs,
-        currentIndex,
         isPlaying,
-        isLooping,
-        isShuffling
-    } = useSelector((state) => state.player);
-    const dispatch = useDispatch();
+        duration,
+        currentTime,
+        song,
+        handlePlayPauseClick,
+        seek,
+        handleLoopClick,
+        handlePrevClick,
+        handleNextClick,
+        handleShuffleClick,
+        lyricList,
+        currentLine,
+        lineHeights
+    } = useContext(MusicPlayerContext)
     // 设置喜欢
-    const [liked, setLiked] = React.useState(false);
-    // 当前歌曲时长
-    const [currentTime, setCurrentTime] = useState(0);
-    // 当前歌曲总时长
-    const [duration, setDuration] = useState(0);
-    // 歌词
-    const [lyricList, setLyricList] = useState([]);
-    // 当前歌词
-    const [currentLine, setCurrentLine] = useState(-1);
-    // 监听播放状态
-    useEffect(() => {
-        if (isPlaying) {
-            audioRef.current.play();
-        } else {
-            audioRef.current.pause();
-        }
-    }, [isPlaying]);
-
-    // 修改音乐地址
-    useEffect(() => {
-        audioRef.current.src = songs[currentIndex].src;
-        audioRef.current.play();
-        dispatch(setPlaying(true))
-
-        setLyricList([])
-        get("/lyric", {id: songs[currentIndex].Lyric}).then((data) => {
-            const bilingualData = createBilingualData(data.lrc.lyric, data.tlyric.lyric);
-            setLyricList(bilingualData)
-        })
-    }, [currentIndex]);
-
-    //   当前歌曲时间
-    const handleTimeUpdate = () => {
-        setCurrentTime(audioRef.current?.currentTime || 0);
-        watchSongLine()
-
-
-    };
-    // 当前歌曲总时间
-    const handleLoadedData = () => {
-        setDuration(audioRef.current?.duration || 0);
-    };
-
-    // 暂停\播放
-    const handlePlayPauseClick = () => {
-        dispatch(setPlaying(!isPlaying))
-    };
-
-    // 下一首
-    const handleNextClick = () => {
-        dispatch(playNext())
-    };
-
-    // 上一首
-    const handlePrevClick = () => {
-        dispatch(playPrevious())
-    };
-
-    // 循环播放
-    const handleLoopClick = () => {
-        message.success("循环播放", 3)
-        dispatch(setLooping(!isLooping));
-    };
-
-    // 随机播放
-    const handleShuffleClick = () => {
-        message.success("随机播放", 3)
-        dispatch(setShuffling(!isShuffling));
-    };
-
-    // 播放结束回调
-    const handleEnded = () => {
-        // 如果是循环
-        if (isLooping) {
-            audioRef.current.currentTime = 0;
-            audioRef.current.play();
-        } else {
-            handleNextClick();
-        }
-    };
-    // 监听歌词当前时长
-    const watchSongLine = () => {
-        // 歌词时间
-        if (!lyricList) return;
-        for (let i = 0; i < lyricList.length; i++) {
-            if (
-                i === lyricList.length - 1 ||
-                currentTime < lyricList[i + 1].time
-            ) {
-                setCurrentLine(i);
-                break;
-            }
-        }
-
-        if (lyricList.length > 0) {
-            const lineHeight = 48; // 每行歌词的高度
-            const translateY = (currentLine - 4) * -lineHeight; // 将当前行的上两行作为起始位置
-            lyricRef.current.style.transform = `translateY(${translateY}px)`;
-        }
-    }
+    const [liked, setLiked] = useState(false);
 
     // 滑块Change事件
     const SliderChange = (e) => {
-        setCurrentTime(e);
-        audioRef.current.currentTime = e;
+        seek(e);
     }
 
     return (
@@ -160,7 +53,7 @@ export default function App() {
                                 className="object-cover"
                                 height={200}
                                 shadow="md"
-                                src={songs[currentIndex].cover}
+                                src={song.cover}
                                 width="100%"
                             />
                         </div>
@@ -168,9 +61,9 @@ export default function App() {
                         <div className="flex flex-col col-span-6 md:col-span-8">
                             <div className="flex justify-between items-start">
                                 <div className="flex flex-col gap-0">
-                                    <h3 className="font-semibold text-foreground/90">{songs[currentIndex].title}</h3>
-                                    <p className="text-small text-foreground/80">{songs[currentIndex].album}</p>
-                                    <h1 className="text-large font-medium mt-2">{songs[currentIndex].singer}</h1>
+                                    <h3 className="font-semibold text-foreground/90">{song.title}</h3>
+                                    <p className="text-small text-foreground/80">{song.album}</p>
+                                    <h1 className="text-large font-medium mt-2">{song.singer}</h1>
                                 </div>
                                 <Button
                                     isIconOnly
@@ -243,26 +136,21 @@ export default function App() {
                             </div>
                         </div>
                         <ScrollShadow hideScrollBar className="w-[570px] h-[400px] lyrics-container">
-                            {lyricList.length > 0 ? <ul ref={lyricRef} className="w-full">
-                                {lyricList.map((item, idx) => (
-                                    <li className={`text-sm text-center py-1 ${idx === currentLine ? 'active text-lg font-semibold text-foreground/90  transition-all py-1.5' : 'text-stone-400'}`}
-                                        key={item.time}
-                                    >
-                                        <p>{item.lrc}</p>
-                                        <p>{item.tlyric}</p>
-                                    </li>
-                                ))}
-                            </ul> : <Spinner className="flex item-center h-full"/>}
-
+                            {lyricList.length > 0 ?
+                                <ul className="w-full" style={{transform: `translateY(${lineHeights}px)`}}>
+                                    {lyricList.map((item, idx) => (
+                                        <li className={`text-sm text-center py-1 ${idx === currentLine ? 'active text-lg font-semibold text-foreground/100  transition-all py-1.5' : 'text-foreground/60'}`}
+                                            key={item.time}
+                                        >
+                                            <p>{item.lrc}</p>
+                                            <p>{item.tlyric}</p>
+                                        </li>
+                                    ))}
+                                </ul> : <Spinner className="flex item-center h-full"/>}
                         </ScrollShadow>
                     </div>
                 </CardBody>
             </Card>
-            <audio ref={audioRef}
-                   onTimeUpdate={handleTimeUpdate}
-                   onLoadedData={handleLoadedData}
-                   onEnded={handleEnded}
-            />
         </div>
     );
 }

@@ -6,7 +6,6 @@ import {FaHome} from 'react-icons/fa';
 import {BiMoviePlay,BiTestTube,BiRadio} from 'react-icons/bi';
 import {LuListMusic} from 'react-icons/lu';
 import {TbMovie} from 'react-icons/tb';
-import {GrClearOption} from 'react-icons/gr';
 import {AiOutlineClear} from 'react-icons/ai';
 import {setSideIdx} from '@/stores/modules/globalStore.js'
 import {useDispatch, useSelector} from "react-redux";

@@ -4,9 +4,14 @@ import Router from "@/routes/index";
 import Mp from '@/components/mp'
 import './index.scss'
 
+// 共享音乐播放器的状态
+import MusicPlayerContext from '@/utils/PlayerContext'
+import useMusicPlayer from '@/utils/usePlayerMusic.jsx'
+
 export default function LayoutIndex() {
+    const musicPlayer = useMusicPlayer('http://music.163.com/song/media/outer/url?id=27591651.mp3');
     return (
-        <>
+        <MusicPlayerContext.Provider value={musicPlayer}>
             <div className="video-bg">
                 <video width="320" height="240" autoPlay loop muted>
                     <source src="https://assets.codepen.io/3364143/7btrrd.mp4" type="video/mp4"/>
@@ -25,6 +30,6 @@ export default function LayoutIndex() {
             </div>
             <Mp></Mp>
             <div className="w-full h-[50px]"></div>
-        </>
+        </MusicPlayerContext.Provider>
     )
 }

@@ -65,7 +65,7 @@ const Slider = ({min, max, step, value, onChange}) => {
 
     return (
         <div
-            className="slider  h-1 rounded-full z-0  bg-default-300/50 h-1 rounded-full bg-default-500/30"
+            className="slider h-1 rounded-full z-0  bg-default-300/50 h-1 rounded-full bg-default-500/30"
             ref={sliderRef}
             onClick={handleSliderChange}
             onMouseDown={handleMouseDown}
