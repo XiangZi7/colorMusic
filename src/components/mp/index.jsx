@@ -1,14 +1,17 @@
 import Slider from "@/components/min-Player/slider.jsx";
 import {formatTime} from "@/utils/FormatTime.jsx";
-import React, {useState, useEffect, useContext} from "react";
+import {useState, useEffect, useContext} from "react";
 import MusicPlayerContext from '@/utils/PlayerContext.js';
 import {PauseCircleIcon} from "@/components/min-Player/PauseCircleIcon.jsx";
 import {PlayIcon} from "@/components/min-Player/PlayIcon.jsx";
-import {Button} from "@nextui-org/react";
+import {Button,Image} from "@nextui-org/react";
 import {PreviousIcon} from "@/components/min-Player/PreviousIcon.jsx";
 import {RepeatOneIcon} from "@/components/min-Player/RepeatOneIcon.jsx";
 import {NextIcon} from "@/components/min-Player/NextIcon.jsx";
 import {ShuffleIcon} from "@/components/min-Player/ShuffleIcon.jsx";
+import {BsFillVolumeUpFill} from 'react-icons/bs';
+import {BiSolidVolumeMute} from "react-icons/bi";
+import {MdLibraryMusic} from "react-icons/md";
 
 export default function App() {
     const {
@@ -24,13 +27,18 @@ export default function App() {
         handleShuffleClick,
         handleVolume,
         volume,
-        lyricList,
-        currentLine,
-        lineHeights
     } = useContext(MusicPlayerContext)
     // 滑块Change事件
     const SliderChange = (e) => {
         seek(e);
+    }
+
+    function changeVolume() {
+        if (volume) {
+            handleVolume(0)
+        } else {
+            handleVolume(70)
+        }
     }
 
     function SliderChangeVolume(e) {
@@ -39,8 +47,15 @@ export default function App() {
 
     return (
         <div
-            className="mp absolute bottom-0 left-0 h-[75px] w-full flex items-center justify-center bg-[#10121B66] backdrop-blur flex">
-            <img src="src/static/1.png" width={70} style={{height: '100%'}}/>
+            className="mp absolute bottom-0 left-0 h-[85px] w-full flex items-center justify-center bg-[#00000066] backdrop-blur flex">
+            <Image
+                isZoomed
+                width={90}
+                radius="none"
+                alt="NextUI Fruit Image with Zoom"
+                className="cursor-pointer"
+                src={song.cover}
+            />
             <div className="flex flex-col mx-2 w-1/5">
                 <span className="mb-2">{song.title}</span>
                 <span>{song.singer}</span>
@@ -72,7 +87,7 @@ export default function App() {
                         variant="light"
                         onClick={handlePlayPauseClick}
                     >
-                        {isPlaying ? <PauseCircleIcon size={50}/> : <PlayIcon size={50}/>}
+                        {isPlaying ? <PauseCircleIcon size={45}/> : <PlayIcon size={45}/>}
                     </Button>
                     <Button
                         isIconOnly
@@ -102,10 +117,30 @@ export default function App() {
                 </div>
 
             </div>
-            <div className="w-1/5">
+            <div className="w-1/5 flex items-center justify-center h-full">
+                <div className="cursor-pointer">
+                    <Button
+                        isIconOnly
+                        className="data-[hover]:bg-foreground/10"
+                        radius="full"
+                        variant="light"
+                        onClick={changeVolume}
+                    >
+                        {volume == 0 ? <BiSolidVolumeMute size={20}/> : <BsFillVolumeUpFill size={20}/>}
+                    </Button>
+                </div>
                 <div className="w-[120px]">
                     <Slider min={0} max={100} step={1} value={volume} onChange={SliderChangeVolume}/>
                 </div>
+                <Button
+                    isIconOnly
+                    className="data-[hover]:bg-foreground/10"
+                    radius="full"
+                    variant="light"
+                    onClick={changeVolume}
+                >
+                    <MdLibraryMusic size={20}/>
+                </Button>
             </div>
         </div>
     )

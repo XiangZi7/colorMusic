@@ -1,5 +1,7 @@
-export default function Radio() {
+export  default function Radio(){
     return (
-        <div>电台</div>
+        <>
+        电台
+        </>
     )
 }

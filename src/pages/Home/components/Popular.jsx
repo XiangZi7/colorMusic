@@ -1,5 +1,6 @@
 import './Popular.scss'
 import {useRef, useEffect} from 'react'
+import {Image} from "@nextui-org/react";
 
 export default function App() {
     const cardsRef = useRef(null);

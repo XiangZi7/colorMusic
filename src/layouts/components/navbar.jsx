@@ -1,5 +1,5 @@
 import './navbar.scss'
-import {Avatar, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
+import {Avatar, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Input} from "@nextui-org/react";
 import Moon from "@/components/min-Player/moon.jsx";
 import Sum from "@/components/min-Player/sum.jsx";
 import {useTheme} from "next-themes";

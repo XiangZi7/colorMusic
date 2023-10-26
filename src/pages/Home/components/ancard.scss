@@ -1,0 +1,20 @@
+.bg-gradient-text {
+  background-image: linear-gradient(to right, #ff416c, #ff4b2b, #ff416c);
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: flow 5s ease-in-out infinite;
+}
+
+@keyframes flow {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}

@@ -24,7 +24,7 @@ const useMusicPlayer = () => {
     const [audio] = useState(new Audio(songs[currentIndex].src));
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-    const [volume, setVolume] = useState();
+    const [volume, setVolume] = useState(70);
     // 歌词
     const [lyricList, setLyricList] = useState([]);
     // 当前歌词
@@ -33,7 +33,6 @@ const useMusicPlayer = () => {
     const [lineHeights, setLineHeight] = useState(144);
     // 初始化
     useEffect(() => {
-        // setVolume(audio.volume)
         audio.addEventListener('ended', () => handleEnded());
         audio.addEventListener('timeupdate', () => handleTimeUpdate());
         audio.addEventListener('loadedmetadata', () => handleLoadedData());
@@ -138,6 +137,7 @@ const useMusicPlayer = () => {
     };
     const handleVolume = (volume) => {
         audio.volume = volume / 100;
+        setVolume(volume)
     };
 
     return {
