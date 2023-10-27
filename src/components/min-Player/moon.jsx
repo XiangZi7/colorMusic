@@ -1,4 +1,4 @@
-export default function moon({size = 24, width, height, ...props}) {
+export default function     moon({size = 24, width, height, ...props}) {
     return (
         <svg t="1697606446258"  viewBox="0 0 1024 1024" version="1.1"
              xmlns="http://www.w3.org/2000/svg" p-id="4316" height={size || height}

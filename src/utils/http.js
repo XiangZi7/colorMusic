@@ -34,11 +34,11 @@ instance.interceptors.response.use(
 );
 
 // 封装get方法
-export const get = (url, params) => {
+export const httpGet = (url, params) => {
     return instance.get(url, { params });
 };
 
 // 封装post方法
-export const post = (url, data) => {
+export const httpPost = (url, data) => {
     return instance.post(url, data);
 };

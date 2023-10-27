@@ -7,7 +7,7 @@ import {
     setLooping,
     setShuffling,
 } from '@/stores/modules/playerStore';
-import {get} from '@/utils/http.js';
+import {httpGet} from '@/utils/http.js';
 import {createBilingualData} from '@/utils/parseLyrics.js';
 import message from '@/components/message/message.jsx';
 
@@ -47,7 +47,7 @@ const useMusicPlayer = () => {
     useEffect(() => {
         audio.src = songs[currentIndex].src;
         setLyricList([]);
-        get('/lyric', {id: songs[currentIndex].Lyric}).then((data) => {
+        httpGet('/lyric', {id: songs[currentIndex].Lyric}).then((data) => {
             const bilingualData = createBilingualData(data.lrc.lyric, data.tlyric.lyric);
             setLyricList(bilingualData);
         });

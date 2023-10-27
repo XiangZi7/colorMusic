@@ -1,12 +1,9 @@
 import './weather.scss'
 import {useEffect} from "react";
-import {get} from "@/utils/http.js";
 
 export default function app() {
 
-    useEffect(() => {
-        get("")
-    })
+
     return (
         <>
             <div className="container mt-8">

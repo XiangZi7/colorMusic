@@ -1,21 +1,33 @@
 import './navbar.scss'
-import {Avatar, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Input} from "@nextui-org/react";
-import Moon from "@/components/min-Player/moon.jsx";
+import {Avatar, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem} from "@nextui-org/react";
 import Sum from "@/components/min-Player/sum.jsx";
 import {useTheme} from "next-themes";
+import {BsMoonStarsFill} from "react-icons/bs";
+import {useNavigate} from "react-router-dom";
+import {useState} from 'react'
 
-export default function App() {
-
+export default function App({userinfo}) {
 
     const {theme, setTheme} = useTheme();
 
+    const [keyword, setKeyword] = useState('');
+    const Navigate = useNavigate()
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            Navigate(`/search?keyword=${encodeURIComponent(keyword)}`);
+        }
+    };
+    const handleChange = (event) => {
+        setKeyword(event.target.value);
+    };
     return (
         <div className="flex justify-between items-center w-full px-[24px] py-[16px] relative">
             <div className="grow flex items-center">
                 <span className="app-icon w-[26px] h-[2px] rounded-[4px] bg-[#1f1c2e] relative"></span>
-                <p className="app-name text-foreground/90 text-large font-bold mx-8">Portfolio</p>
+                <p className="app-name text-foreground/90 text-large font-bold mx-8">Color Music</p>
                 <div className="search-wrapper">
-                    <input className="search-input" type="text" placeholder="Search"/>
+                    <input  value={keyword}
+                            onChange={handleChange} className="search-input" type="text" placeholder="Index" onKeyDown={handleKeyPress}/>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                          strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                          className="feather feather-search" viewBox="0 0 24 24">
@@ -31,7 +43,7 @@ export default function App() {
                             radius="full"
                             variant="light"
                             onClick={() => setTheme(theme == 'light' ? 'dark' : 'light')}>
-                        {theme == 'light' ? <Moon/> : <Sum/>}
+                        {theme == 'light' ? <BsMoonStarsFill size={15}/> : <Sum/>}
                     </Button>
                 </div>
                 <Dropdown placement="bottom-end">
@@ -43,13 +55,13 @@ export default function App() {
                             color=" secondary"
                             name=" Jason Hughes"
                             size=" sm"
-                            src=" https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                            src={userinfo.avatarUrl}
                         />
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Profile Actions" variant="flat">
                         <DropdownItem key="profile" className="h-14 gap-2">
                             <p className="font-semibold">Signed in as</p>
-                            <p className="font-semibold">zoey@example.com</p>
+                            <p className="font-semibold">793923048@qq.com</p>
                         </DropdownItem>
                         <DropdownItem key="settings">My Settings</DropdownItem>
                         <DropdownItem key="team_settings">Team Settings</DropdownItem>
@@ -62,7 +74,7 @@ export default function App() {
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <span className="text-sm font-bold text-foreground/90">一向纯荣</span>
+                <span className="text-sm font-bold text-foreground/90">{userinfo.nickname}</span>
             </div>
         </div>
     );

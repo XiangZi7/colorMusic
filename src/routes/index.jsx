@@ -11,6 +11,7 @@ const Anim = lazy(() => import('@/pages/Anim'))
 const Chat = lazy(() => import('@/pages/Chat'));
 const Theme = lazy(() => import('@/pages/theme'))
 const Test = lazy(() => import('@/pages/Test'))
+const Search = lazy(() => import('@/pages/Search/index.jsx'))
 
 const LoadingTip = Element => (
     <Suspense fallback={<Spinner/>}>
@@ -35,6 +36,7 @@ const rootRouter = [
     {path: '/anim', element: LoadingTip(Anim), meta: {title: '动漫'}},
     {path: '/theme', element: LoadingTip(Theme), meta: {title: '主题'}},
     {path: '/test', element: LoadingTip(Test), meta: {title: '测试'}},
+    {path: '/search', element: LoadingTip(Search), meta: {title: '搜索'}},
 ];
 const Router = () => {
     const routes = useRoutes(rootRouter);

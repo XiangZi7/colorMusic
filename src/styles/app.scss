@@ -32,6 +32,18 @@
 body {
   font-family: var(--font-family);
 }
+/*
+* 全局滚动条
+*/
+::-webkit-scrollbar {
+  width: 6px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(1 2 3 / 40%);
+  border-radius: 10px;
+}
 
 .shadow-blue {
   box-shadow: 0.8rem 0.8rem 1.4rem var(--greyLight-2), -0.2rem -0.2rem 1.8rem var(--white);
